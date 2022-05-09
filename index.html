@@ -1,0 +1,29 @@
+<html>
+
+<head>
+    <link href="styles.css" rel="stylesheet" type="text/css" />
+</head>
+
+<body style="justify-content: center;">
+    <canvas id="canvas"></canvas>
+    <script src="./js/processing.js"></script>
+    <script src="./script.js"></script>
+</body>
+<footer>
+   
+
+    <span>
+    <div class="row">
+        <select name="dimension" id="dimension">
+            <option value="1"selected>R1</option>
+            <option value="2">R2</option>
+            <option value="3">R3</option>
+        </select>
+        <input type="number" placeholder="x" min="0" max="10" id="r1" > 
+        <input type="number" placeholder="y" min="0" max="10" id="r2" style="display: none;"> 
+        <input type="number" placeholder="z" min="0" max="10" id="r3" style="display: none;"> 
+        <button id="btn-draw">draw vector</button>
+    </div>
+</footer>
+
+</html>
