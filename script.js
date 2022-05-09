@@ -58,8 +58,6 @@ function sketch(processing) {
 
             x1 = (x1*250)/100;
             y1 = (y1*250)/100;
-           
-            
             processing.line(250, 250,250+ x1,250-y1);
           }
         break;
