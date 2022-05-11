@@ -4,53 +4,101 @@ var r = 1;
 var x = -101;
 var y = -101;
 var z = -101;
+
+var projectileX = 20
+var projectileY = 250
+var projectileZ = -101
+var initialX = 20
+var initialY = 250
+var vx, vy
+var angle = -30
+var initialSpeed = 20
+var time = 0
+const gravity = 0.25
+const g = 0.25
+const radio = 25
+const h = 0.5
+
+function degreeToRad(degreeAngle) {
+  return degreeAngle * Math.PI / 180
+}
+
+function move() {
+  radianAngle = degreeToRad(angle)
+  vx = initialSpeed * Math.cos(radianAngle)
+  vy = initialSpeed * Math.sin(radianAngle)
+  projectileX = vx * time
+  projectileY = initialY + (vy * time) - (gravity * time * time)/2
+  time++
+
+  vy = vy + g*h;
+  initialY = initialY + h*vy;
+  if (initialY>=SIZE-radio/2) {
+    initialY = SIZE-radio/2;
+    vy = -vy;
+  } else if (initialY<=radio/2) {
+    initialY = radio/2;
+    vy = -vy;
+  }
+  // vx es constante (salvo el cambio de sentido al chocar con la pared)
+  initialX = initialX + h*vx;
+  if (initialX>=SIZE-radio/2) {
+    initialX = SIZE-radio/2;
+    vx = -vx;
+  } else if (initialX<=radio/2) {
+    initialX = radio/2;
+    vx = -vx;
+  }
+  console.log(initialX, projectileX, initialY, projectileY)
+}
+
 function sketch(processing) {
 
-    processing.setup = function(){
+    processing.setup = function() {
       processing.frameRate(2); // fps
 		  processing.size(SIZE, SIZE);
     }
-    processing.drawGame = function(world){
+
+    processing.drawGame = function(world) {
       processing.background(255,255,200);
 
       processing.strokeWeight(4);  // Default
-      
+
       processing.stroke(0); // color negro para las lineas
 
       processing.point(250, 250); // origen
 
-      
-      processing.fill(0,255,0); 
+      processing.fill(0,255,0);
       /* cuadricula*/
 
-      switch (Number(r)) {
+      /* switch (Number(r)) {
         case 1:
-          /* linea horizontal*/ 
+          // linea horizontal
           processing.line(0, 250, 500, 250);
           if (x > -101 && x < 101) {
             processing.point((x*500)/100, 200 ); // origen
           }
           break;
         case 2:
-          /* linea horizontal*/ 
+          // linea horizontal
           processing.line(0, 250, 500, 250);
-          /* linea vertical*/
+          // linea vertical
           processing.line(250, 0, 250, 500);
           if (x > -101 && x < 101 && y > -101 && y < 101) {
-            /* vector que ingresan*/
+            // vector que ingresan
             processing.line(250, 250, 250+( (x*250)/100 ), 250-( (y*250)/100 ));
             //processing.point(250+x, 250-y ); // origen
           }
           break;
         case 3:
-          /* linea horizontal*/ 
+          // linea horizontal
           processing.line(250, 250, 500, 250);
-          /* linea vertical*/
+          // linea vertical
           processing.line(250, 0, 250, 250);
-          /* linea diagonal*/
+          // linea diagonal
           processing.line(250, 250, 0, 500);
 
-          /* Transformacion lineal de R3 a R2*/
+          // Transformacion lineal de R3 a R2
           if (x > -101 && x < 101 && y > -101 && y < 101 && z > -101 && z < 101) {
 
             var x1 = (3*x)+y-z;
@@ -60,13 +108,15 @@ function sketch(processing) {
             y1 = (y1*250)/100;
             processing.line(250, 250,250+ x1,250-y1);
           }
-        break;
+          break;
         default:
           break;
-      }
-      
-      
+      } */
+
+      processing.ellipse(initialX, initialY, radio, radio);
+      move()
     }
+
     processing.onTic = function(world) {
     }
 
@@ -155,4 +205,3 @@ window.onload = function() {
     const instance = new Processing(canvas, sketch);
   }); 
 };
-      
